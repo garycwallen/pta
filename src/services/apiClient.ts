@@ -8,6 +8,28 @@ export interface WalkInRegistrationData {
   email?: string;
 }
 
+// Simplified RSVP Family structure matching Excel columns
+export interface RsvpFamily {
+  id: number;
+  name: string;                    // Column A: Contact person's name
+  email: string;                   // Column B: Email address
+  attendee_count: number;          // Column C: Number of attendees
+  grade_levels?: string;           // Column D: Student grade levels (comma-separated)
+  created_at: string;
+  updated_at: string;
+}
+
+export interface RsvpFamilyData {
+  name: string;                    // Column A: Contact person's name
+  email: string;                   // Column B: Email address
+  attendee_count: number;          // Column C: Number of attendees
+  grade_levels?: string;           // Column D: Student grade levels (comma-separated)
+}
+
+export interface RsvpCheckInData {
+  rsvpFamilyId: number;
+}
+
 export interface ApiResponse<T = any> {
   success: boolean;
   data?: T;
@@ -20,7 +42,7 @@ class ApiClient {
     options: RequestInit = {}
   ): Promise<T> {
     const url = `${API_BASE_URL}${endpoint}`;
-    
+
     const config: RequestInit = {
       headers: {
         'Content-Type': 'application/json',
@@ -31,10 +53,12 @@ class ApiClient {
 
     try {
       const response = await fetch(url, config);
-      
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+        throw new Error(
+          errorData.error || `HTTP error! status: ${response.status}`
+        );
       }
 
       return await response.json();
@@ -44,27 +68,52 @@ class ApiClient {
     }
   }
 
-  // Create walk-in registration
-  async createWalkInRegistration(data: WalkInRegistrationData): Promise<ApiResponse> {
+  // Walk-in registration methods
+  async createWalkInRegistration(
+    data: WalkInRegistrationData
+  ): Promise<ApiResponse> {
     return this.request('/registrations/walk-in', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
-  // Create RSVP confirmation
+  async getWalkInRegistrations(): Promise<ApiResponse> {
+    return this.request('/registrations/walk-in');
+  }
+
+  // RSVP Family methods - simplified structure
+  async getRsvpFamilies(): Promise<ApiResponse<RsvpFamily[]>> {
+    return this.request('/registrations/rsvp-families');
+  }
+
+  async addRsvpFamily(data: RsvpFamilyData): Promise<ApiResponse> {
+    return this.request('/registrations/rsvp-families', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  // RSVP Check-in methods
+  async processRsvpCheckIn(data: RsvpCheckInData): Promise<ApiResponse> {
+    return this.request('/registrations/rsvp-checkin', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async getRsvpCheckIns(): Promise<ApiResponse> {
+    return this.request('/registrations/rsvp-checkins');
+  }
+
+  // Legacy RSVP confirmation
   async createRsvpConfirmation(): Promise<ApiResponse> {
     return this.request('/registrations/rsvp', {
       method: 'POST',
     });
   }
 
-  // Get walk-in registrations
-  async getWalkInRegistrations(): Promise<ApiResponse> {
-    return this.request('/registrations/walk-in');
-  }
-
-  // Get statistics
+  // Statistics
   async getStats(): Promise<ApiResponse> {
     return this.request('/registrations/stats');
   }
