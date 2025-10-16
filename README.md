@@ -3,6 +3,13 @@
 ## Description
 A table kiosk for checking into an event. Has two selections, whether the group RSVP'd or not. Yes RSVP has them select their group. No RSVP has them provide their group size and other optional information.
 
+## TODO
+- Migrate to Google Auth
+  - Allow list e-mail addresses
+- Setup Supabase PostgreSQL
+- Setup Web Hosting
+- Configure non-rsvp event mode..?
+
 ## RSVP
 
 ### RSVP - Yes
