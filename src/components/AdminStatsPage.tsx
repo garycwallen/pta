@@ -70,7 +70,7 @@ export default function AdminStatsPage({ onClose }: AdminStatsPageProps) {
 
   if (isLoading && !stats) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-blue-600 via-blue-500 to-yellow-400 flex items-center justify-center p-4">
         <Card className="w-96 bg-white/95 backdrop-blur-sm">
           <CardContent className="p-8 text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
@@ -82,7 +82,7 @@ export default function AdminStatsPage({ onClose }: AdminStatsPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-blue-500 to-yellow-400 flex items-center justify-center p-4">
       <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-2xl w-full max-w-4xl max-h-screen overflow-y-auto border-0">
         <div className="p-6">
           {/* Header */}
@@ -124,7 +124,7 @@ export default function AdminStatsPage({ onClose }: AdminStatsPageProps) {
           {stats && (
             <div className="space-y-6">
               {/* Total Attendees - Main Highlight */}
-              <Card className="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+              <Card className="bg-gradient-to-r from-blue-500 to-yellow-500 text-white">
                 <CardContent className="p-8 text-center">
                   <h2 className="text-lg font-medium mb-2">Total People in Building</h2>
                   <p className="text-6xl font-bold">{stats.total.attendees}</p>

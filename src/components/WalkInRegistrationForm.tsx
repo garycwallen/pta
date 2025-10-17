@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, Users, Baby, Plus, Minus } from 'lucide-react';
 
 interface WalkInData {
+  lastName: string;
   adults: number;
   kids: number;
   kidGrades: string[];
@@ -16,6 +17,7 @@ interface WalkInRegistrationFormProps {
 }
 
 export default function WalkInRegistrationForm({ onSubmit, onBack }: WalkInRegistrationFormProps) {
+  const [lastName, setLastName] = useState('');
   const [adults, setAdults] = useState(1);
   const [kids, setKids] = useState(0);
   const [kidGrades, setKidGrades] = useState<string[]>([]);
@@ -53,6 +55,7 @@ export default function WalkInRegistrationForm({ onSubmit, onBack }: WalkInRegis
     setIsSubmitting(true);
     try {
       await onSubmit({
+        lastName: lastName.trim(),
         adults,
         kids,
         kidGrades,
@@ -64,6 +67,7 @@ export default function WalkInRegistrationForm({ onSubmit, onBack }: WalkInRegis
   };
 
   const totalAttendees = adults + kids;
+  const canSubmit = totalAttendees > 0 && lastName.trim().length > 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center p-8">
@@ -75,8 +79,26 @@ export default function WalkInRegistrationForm({ onSubmit, onBack }: WalkInRegis
                 Walk-in Registration
               </h1>
               <p className="text-xl text-gray-600">
-                How many people will be attending?
+                Please provide your information
               </p>
+            </div>
+
+            {/* Last Name Input */}
+            <div className="mb-8">
+              <h3 className="text-2xl font-semibold text-gray-700 mb-4 text-center">
+                Last Name *
+              </h3>
+              <div className="max-w-md mx-auto">
+                <input
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  disabled={isSubmitting}
+                  placeholder="Enter your last name"
+                  className="w-full px-6 py-4 text-lg border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all duration-200 disabled:opacity-50"
+                  required
+                />
+              </div>
             </div>
 
             {/* Total Counter */}
@@ -185,8 +207,8 @@ export default function WalkInRegistrationForm({ onSubmit, onBack }: WalkInRegis
               )}
             </div>
 
-            {/* Email Input */}
-            <div className="mb-12">
+            {/* Email Input - Commented out for now, no current use case */}
+            {/* <div className="mb-12">
               <h3 className="text-2xl font-semibold text-gray-700 mb-4 text-center">
                 Email Address (Optional)
               </h3>
@@ -200,7 +222,7 @@ export default function WalkInRegistrationForm({ onSubmit, onBack }: WalkInRegis
                   className="w-full px-6 py-4 text-lg border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all duration-200 disabled:opacity-50"
                 />
               </div>
-            </div>
+            </div> */}
 
             {/* Action Buttons */}
             <div className="flex space-x-4 justify-center">
@@ -217,7 +239,7 @@ export default function WalkInRegistrationForm({ onSubmit, onBack }: WalkInRegis
               
               <Button
                 onClick={handleSubmit}
-                disabled={totalAttendees === 0 || isSubmitting}
+                disabled={!canSubmit || isSubmitting}
                 size="lg"
                 className="px-8 py-4 text-lg bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white shadow-lg hover:shadow-xl disabled:opacity-50"
               >

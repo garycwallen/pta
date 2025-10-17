@@ -7,6 +7,7 @@ interface ConfirmationData {
   name?: string;
   attendeeCount?: number;
   gradeLevels?: string;
+  lastName?: string;
   adults?: number;
   kids?: number;
   kidGrades?: string[];

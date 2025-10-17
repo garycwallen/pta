@@ -6,8 +6,7 @@ import {
   processRsvpCheckIn,
   addRsvpFamily,
   getRsvpCheckIns,
-  createRsvpConfirmation,
-  getStats,
+  getStats
 } from '../controllers/registrationController';
 
 const router = Router();
@@ -17,15 +16,12 @@ router.post('/walk-in', createWalkInRegistration);
 router.get('/walk-in', getWalkInRegistrations);
 
 // RSVP Family routes
-router.get('/rsvp-families', getRsvpFamilies);           // Get all available RSVP families
-router.post('/rsvp-families', addRsvpFamily);            // Add new RSVP family (admin)
-router.post('/rsvp-checkin', processRsvpCheckIn);        // Process RSVP check-in
+router.get('/rsvp-families', getRsvpFamilies);
+router.post('/rsvp-families', addRsvpFamily);
+router.post('/rsvp-checkin', processRsvpCheckIn);
 
 // RSVP Check-in routes
-router.get('/rsvp-checkins', getRsvpCheckIns);           // Get all RSVP check-ins
-
-// Legacy RSVP route (keeping for compatibility)
-router.post('/rsvp', createRsvpConfirmation);
+router.get('/rsvp-checkins', getRsvpCheckIns);
 
 // Statistics
 router.get('/stats', getStats);

@@ -10,7 +10,7 @@ interface MainKioskScreenProps {
 
 export default function MainKioskScreen({ onSelection, onAdminClick, isSubmitting = false }: MainKioskScreenProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center p-8 relative">
+    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-blue-500 to-yellow-400 flex items-center justify-center p-8 relative">
       {/* Small Admin Stats Icon - Top Right Corner */}
       <button
         onClick={onAdminClick}

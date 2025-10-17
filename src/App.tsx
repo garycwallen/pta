@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { apiClient } from './services/apiClient';
 import MainKioskScreen from './components/MainKioskScreen';
@@ -10,6 +9,7 @@ import AdminStatsPage from './components/AdminStatsPage';
 type Screen = 'main' | 'walkIn' | 'rsvp' | 'confirmation' | 'admin';
 
 interface WalkInData {
+  lastName: string;
   adults: number;
   kids: number;
   kidGrades: string[];
@@ -21,15 +21,15 @@ interface ConfirmationData {
   name?: string;
   attendeeCount?: number;
   gradeLevels?: string;
+  lastName?: string;
   adults?: number;
   kids?: number;
   kidGrades?: string[];
 }
 
-export default function App() {
+function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('main');
-  const [confirmationData, setConfirmationData] =
-    useState<ConfirmationData | null>(null);
+  const [confirmationData, setConfirmationData] = useState<ConfirmationData | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSelection = (choice: 'yes' | 'no') => {
@@ -46,12 +46,12 @@ export default function App() {
       console.log('📝 Submitting walk-in registration:', data);
       await apiClient.createWalkInRegistration(data);
       console.log('✅ Walk-in registration successful!');
-
+      
       setConfirmationData({
         type: 'walkIn',
         adults: data.adults,
         kids: data.kids,
-        kidGrades: data.kidGrades,
+        kidGrades: data.kidGrades
       });
       setCurrentScreen('confirmation');
     } catch (error) {
@@ -60,7 +60,7 @@ export default function App() {
         type: 'walkIn',
         adults: data.adults,
         kids: data.kids,
-        kidGrades: data.kidGrades,
+        kidGrades: data.kidGrades
       });
       setCurrentScreen('confirmation');
     } finally {
@@ -74,7 +74,7 @@ export default function App() {
       type: 'rsvp',
       name: familyData.name,
       attendeeCount: familyData.attendeeCount,
-      gradeLevels: familyData.gradeLevels,
+      gradeLevels: familyData.gradeLevels
     });
     setCurrentScreen('confirmation');
   };
@@ -88,53 +88,59 @@ export default function App() {
   switch (currentScreen) {
     case 'main':
       return (
-        <MainKioskScreen
-          onSelection={handleSelection}
+        <MainKioskScreen 
+          onSelection={handleSelection} 
           onAdminClick={() => setCurrentScreen('admin')}
           isSubmitting={isSubmitting}
         />
       );
-
+    
     case 'walkIn':
       return (
-        <WalkInRegistrationForm
-          onSubmit={handleWalkInSubmit}
-          onBack={handleBackToMain}
+        <WalkInRegistrationForm 
+          onSubmit={handleWalkInSubmit} 
+          onBack={handleBackToMain} 
         />
       );
-
+    
     case 'rsvp':
       return (
-        <RsvpFamilySelector
-          onCheckInComplete={handleRsvpCheckIn}
-          onBack={handleBackToMain}
+        <RsvpFamilySelector 
+          onCheckInComplete={handleRsvpCheckIn} 
+          onBack={handleBackToMain} 
         />
       );
-
+    
     case 'confirmation':
       return confirmationData ? (
-        <ConfirmationScreen
-          data={confirmationData}
-          onTimeout={handleBackToMain}
+        <ConfirmationScreen 
+          data={confirmationData} 
+          onTimeout={handleBackToMain} 
         />
       ) : (
-        <MainKioskScreen
-          onSelection={handleSelection}
+        <MainKioskScreen 
+          onSelection={handleSelection} 
           onAdminClick={() => setCurrentScreen('admin')}
           isSubmitting={isSubmitting}
         />
       );
-
+    
     case 'admin':
-      return <AdminStatsPage onClose={handleBackToMain} />;
-
+      return (
+        <AdminStatsPage 
+          onClose={handleBackToMain} 
+        />
+      );
+    
     default:
       return (
-        <MainKioskScreen
-          onSelection={handleSelection}
+        <MainKioskScreen 
+          onSelection={handleSelection} 
           onAdminClick={() => setCurrentScreen('admin')}
           isSubmitting={isSubmitting}
         />
       );
   }
 }
+
+export default App;
