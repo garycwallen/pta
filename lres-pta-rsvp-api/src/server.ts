@@ -1,6 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
+
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import registrationRoutes from './routes/registrationRoutes';
 
@@ -9,43 +10,34 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173', // Vite default port
+  origin: process.env.FRONTEND_URL || '*',
   credentials: true
 }));
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Add this after the CORS middleware and before your routes
-app.use((req, res, next) => {
-  console.log(`🌐 ${new Date().toISOString()} - ${req.method} ${req.url}`);
-  console.log(`📦 Request body:`, req.body);
+// Request logging middleware
+app.use((req: Request, res: Response, next: NextFunction) => {
+  console.log(`📧 ${req.method} ${req.path}`);
+  if (req.method === 'POST') {
+    console.log('📦 Request body:', req.body);
+  }
   next();
 });
 
 // Routes
-app.use('/api/registrations', registrationRoutes);
+app.use('/api', registrationRoutes);
 
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+// Health check
+app.get('/health', (req: Request, res: Response) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Error handling middleware
-app.use((err: any, req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Something went wrong!' });
-});
-
-// 404 handler - Fixed for Express 5.x
-app.use((req, res) => {
+// 404 handler
+app.use((req: Request, res: Response) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📊 API available at: http://localhost:${PORT}/api`);
-  console.log(`❤️  Health check: http://localhost:${PORT}/health`);
 });
-
-export default app;
