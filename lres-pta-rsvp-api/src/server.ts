@@ -10,7 +10,10 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*',
+  origin: [
+    'http://localhost:5173',
+    'https://lres-events.vercel.app'
+  ],
   credentials: true
 }));
 
