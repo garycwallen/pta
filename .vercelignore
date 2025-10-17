@@ -1,0 +1,5 @@
+node_modules
+lres-pta-rsvp-api/node_modules
+lres-pta-rsvp-api/dist
+.env
+.env.local
