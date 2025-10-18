@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import thumbsUpUrl from '../assets/thumbs_up.png';
+import GradientLayout from './GradientLayout';
 
 interface ConfirmationData {
   type: 'rsvp' | 'walkIn';
@@ -52,26 +53,28 @@ export default function ConfirmationScreen({ data, onTimeout }: ConfirmationScre
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center p-8">
-      <Card className="w-full max-w-2xl bg-white/95 backdrop-blur-sm shadow-2xl border-0">
-        <CardContent className="p-12 text-center">
-          <img src={thumbsUpUrl} alt="Thumbs up" className="w-100 h-100 mx-auto mb-6" />
-          
-          <h2 className="text-4xl font-bold text-gray-800 mb-6">
-            {data.type === 'rsvp' ? 'Welcome!' : 'Welcome Walk-ins!'}
-          </h2>
-          
-          <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-            {renderMessage()}
-          </p>
-          
-          <div className="text-center">
-            <div className="inline-block bg-blue-100 text-blue-800 px-6 py-3 rounded-full text-lg font-medium">
-              Returning to main screen in 5 seconds...
+    <GradientLayout>
+      <div className="flex items-center justify-center p-8 min-h-screen">
+        <Card className="w-full max-w-2xl bg-white/95 backdrop-blur-sm shadow-2xl border-0">
+          <CardContent className="p-12 text-center">
+            <img src={thumbsUpUrl} alt="Thumbs up" className="w-100 h-100 mx-auto mb-6" />
+            
+            <h2 className="text-4xl font-bold text-gray-800 mb-6">
+              {data.type === 'rsvp' ? 'Welcome!' : 'Welcome Walk-ins!'}
+            </h2>
+            
+            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              {renderMessage()}
+            </p>
+            
+            <div className="text-center">
+              <div className="inline-block bg-blue-100 text-blue-800 px-6 py-3 rounded-full text-lg font-medium">
+                Returning to main screen in 5 seconds...
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+          </CardContent>
+        </Card>
+      </div>
+    </GradientLayout>
   );
 }
