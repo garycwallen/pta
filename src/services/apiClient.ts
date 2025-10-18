@@ -1,3 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+export interface RsvpFamily {
+  id: number;
+  name: string;
+  email: string;
+  attendee_count: number;
+  grade_levels?: string;
+  created_at?: string;
+}
+
 class ApiClient {
   private baseURL: string;
 
@@ -7,7 +18,7 @@ class ApiClient {
 
   private async request(endpoint: string, options: RequestInit = {}) {
     const url = `${this.baseURL}${endpoint}`;
-    
+
     try {
       const response = await fetch(url, {
         ...options,
@@ -30,43 +41,43 @@ class ApiClient {
 
   // Walk-in registrations
   async createWalkInRegistration(data: any) {
-    return this.request('/walk-in', {  // ✅ Fixed
+    return this.request('/walk-in', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
   async getWalkInRegistrations() {
-    return this.request('/walk-in');  // ✅ Fixed
+    return this.request('/walk-in');
   }
 
   // RSVP families
   async getRsvpFamilies() {
-    return this.request('/rsvp-families');  // ✅ Fixed
+    return this.request('/rsvp-families');
   }
 
   async addRsvpFamily(data: any) {
-    return this.request('/rsvp-families', {  // ✅ Fixed
+    return this.request('/rsvp-families', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
   // RSVP check-in
-  async processRsvpCheckIn(rsvpFamilyId: number) {
-    return this.request('/rsvp-checkin', {  // ✅ Fixed
+  async processRsvpCheckIn(data: { rsvpFamilyId: number }) {
+    return this.request('/rsvp-checkin', {
       method: 'POST',
-      body: JSON.stringify({ rsvpFamilyId }),
+      body: JSON.stringify(data),
     });
   }
 
   async getRsvpCheckIns() {
-    return this.request('/rsvp-checkins');  // ✅ Fixed
+    return this.request('/rsvp-checkins');
   }
 
   // Statistics
   async getStats() {
-    return this.request('/stats');  // ✅ Fixed
+    return this.request('/stats');
   }
 }
 
