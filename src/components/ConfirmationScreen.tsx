@@ -23,7 +23,7 @@ export default function ConfirmationScreen({ data, onTimeout }: ConfirmationScre
   useEffect(() => {
     const timer = setTimeout(() => {
       onTimeout();
-    }, 5000);
+    }, 3000);
     
     return () => clearTimeout(timer);
   }, [onTimeout]);
@@ -69,7 +69,7 @@ export default function ConfirmationScreen({ data, onTimeout }: ConfirmationScre
             
             <div className="text-center">
               <div className="inline-block bg-blue-100 text-blue-800 px-6 py-3 rounded-full text-lg font-medium">
-                Returning to main screen in 5 seconds...
+                Returning to main screen in 3 seconds...
               </div>
             </div>
           </CardContent>
