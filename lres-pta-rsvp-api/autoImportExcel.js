@@ -8,7 +8,7 @@ const path = require('path');
 const fs = require('fs');
 
 const dbPath = path.join(process.cwd(), 'data', 'event-checkin.db');
-const excelFile = process.argv[2] || 'Test_RSVPLUCKYSAFARI091025.xlsx';
+const excelFile = process.argv[2] || 'S&S 2025 RSVPs.xlsx';
 
 console.log('🚀 Automated RSVP Excel Import');
 console.log('📁 Excel file:', excelFile);

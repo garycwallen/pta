@@ -9,7 +9,7 @@ require('dotenv').config();
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const excelFile = process.argv[2] || 'Test_RSVPLUCKYSAFARI091025.xlsx';
+const excelFile = process.argv[2] || 'S&S 2025 RSVPs.xlsx';
 
 // Validation functions
 function validateEmail(email) {
